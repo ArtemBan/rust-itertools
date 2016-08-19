@@ -130,3 +130,35 @@ impl<A, St, F> Iterator for Unfold<St, F>
         (0, None)
     }
 }
+
+#[derive(Clone)]
+pub struct Iterate<St, F> {
+    state: St,
+    f: F,
+}
+
+impl<St, F> Iterator for Iterate<St, F>
+    where F: FnMut(&St) -> St
+{
+    type Item = St;
+
+    #[inline]
+    fn next(&mut self) -> Option<Self::Item> {
+        let next_state = (self.f)(&self.state);
+        Some(mem::replace(&mut self.state, next_state))
+    }
+
+    #[inline]
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        (usize::MAX, None)
+    }
+}
+
+pub fn iterate<St, F>(initial_state: St, f: F) -> Iterate<St, F>
+    where F: FnMut(&St) -> St
+{
+    Iterate {
+        state: initial_state,
+        f: f,
+    }
+}
