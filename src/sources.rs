@@ -167,7 +167,7 @@ impl<St, F> Iterator for Iterate<St, F>
 /// ```
 /// use itertools::iterate;
 /// 
-/// itertools::assert_equal(iterate(1, |&i| i * 3).take(5), vec![1, 3, 9, 27, 81])
+/// itertools::assert_equal(iterate(1, |&i| i * 3).take(5), vec![1, 3, 9, 27, 81]);
 /// ```
 pub fn iterate<St, F>(initial_state: St, f: F) -> Iterate<St, F>
     where F: FnMut(&St) -> St
