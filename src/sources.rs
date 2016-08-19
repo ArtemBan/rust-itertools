@@ -1,6 +1,9 @@
 //! Iterators that are sources (produce elements from parameters,
 //! not from another iterator).
 
+use std::mem;
+use std::usize;
+
 /// An iterator source that produces elements indefinitely by calling
 /// a given closure.
 ///
